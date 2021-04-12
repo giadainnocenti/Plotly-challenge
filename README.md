@@ -33,7 +33,7 @@ The dataset reveals that a small handful of microbial species (also called opera
 
 ## 4. Create a live interactive dashboard
 [https://giadainnocenti.github.io/Plotly-challenge/](https://giadainnocenti.github.io/Plotly-challenge/)
-At the moment, it is not showing anything, I don't know if it is because it takes some time to update.
+\
 ![dashboard](https://github.com/giadainnocenti/Plotly-challenge/blob/main/Images/mydashboard_nogauge.PNG)
 
 
