@@ -29,10 +29,11 @@ The dataset reveals that a small handful of microbial species (also called opera
 ![Bubble Chart](Images/bubble_chart.png)
 
 ## 3. Display the sample metadata, i.e., an individual's demographic information.
-
+![]()
 
 ## 4. Create a live interactive dashboard
-[]()
+[https://giadainnocenti.github.io/Plotly-challenge/](https://giadainnocenti.github.io/Plotly-challenge/)
+At the moment, it is not showing anything, I don't know if it is because it takes some time to update.
 
 
 
