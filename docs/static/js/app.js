@@ -1,27 +1,25 @@
-//creating a variable containing all the data from samples.json
-d3.json("../../samples.json").then((fullData) => {
-    console.log(fullData);
-    //saving the IDs for the dropdown menu
-    ids = fullData.names;
-    console.log(ids);
-    // creating the dropdown menu
-    // Creating a drop down menu containing the ids
-    ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
-});
-
-function UpdateID(){
-    d3.event.preventDefault();
-    // storing the selected ID in a variable 
-    var selectedID = d3.select("#selDataset").node().value;
-    console.log(selectedID)
-
-    PlotData(selectedID)
+//function to show something on the page
+function inizialization(){
+    PlotData();
 };
 
-function PlotData(selectedID){
+// I am not sure this function will actually update anything since the node select the first value. I need to understand better the assignment
+function UpdatePage_selection(){
+    PlotData();
+};
+function PlotData(){
 // Use d3.json() to fetch data from JSON file
 // Incoming data is internally referred to as fullData
     d3.json("../../samples.json").then((fullData) => {
+        console.log(fullData);
+        //saving the IDs for the dropdown menu
+        ids = fullData.names;
+        console.log(ids);
+        // creating the dropdown menu
+        // Creating a drop down menu containing the ids
+        ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
+        var selectedID = d3.selectAll("#selDataset").node().value;
+        console.log(selectedID)
         // getting only the dataset exclusing information not relevant
         var sampleData = fullData.samples
         console.log(sampleData)
@@ -57,3 +55,4 @@ function PlotData(selectedID){
         Plotly.newPlot("bar", dataPlot, layout);
     });
 };
+inizialization();
