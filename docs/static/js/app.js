@@ -1,13 +1,14 @@
 //function to show something on the page
-var selectedID = 0
 function inizialization(){
     PlotData();
 };
 
 // I am not sure this function will actually update anything since the node select the first value. I need to understand better the assignment
-function UpdatePage_selection(){
+function optionChanged(){
     PlotData();
 };
+
+
 function PlotData(){
 // Use d3.json() to fetch data from JSON file
 // Incoming data is internally referred to as fullData
@@ -29,8 +30,9 @@ function PlotData(){
             .append('option')
             .text(id =>id)
             .attr("value", id=>id);
-        // getting the selectedID
-        selectedID = d3.select("#selDataset").property("value");
+        // getting the selectedID        
+       //dropdown.on('change', optionChanged()),
+       var selectedID = d3.selectAll("#selDataset").node().value;
         console.log(selectedID)
         
         //filter the data for the current ID to get relavant information
