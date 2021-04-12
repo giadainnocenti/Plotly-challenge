@@ -19,21 +19,25 @@ function PlotData(){
         // getting only the dataset exclusing information not relevant
         var sampleData = fullData.samples
         console.log(sampleData)
+        var sampleMetadata = fullData.metadata
         // creating the dropdown menu
         // Creating a drop down menu containing the ids
-        ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
+        var dropdown = d3.select('#selDataset');
+        dropdown.selectAll('option')
+            .data(ids)
+            .enter()
+            .append('option')
+            .text(id =>id)
+            .attr("value", id=>id);
         // getting the selectedID
-        if (selectedID === 0){
-            selectedID = d3.selectAll("#selDataset").node().value;
-        }else{
-        selectedID = d3.select("#selDataset").property("optionChanged");
-    }
+        selectedID = d3.select("#selDataset").property("value");
         console.log(selectedID)
-        d3.select("selected").remove();
         
         //filter the data for the current ID to get relavant information
         var filteredID = sampleData.filter(row => row.id == selectedID);
+        var filteredMetadata = sampleMetadata.filter(row => row.id == selectedID);
         console.log(filteredID)
+        console.log(filteredMetadata)
         // create Trace for the horizontal bar chart
         var trace1 = {
             x: filteredID[0].sample_values.slice(0,10).reverse(),
@@ -81,6 +85,26 @@ function PlotData(){
           };
           
           Plotly.newPlot('bubble', data, layout);
+
+          //Display the sample metadata - individual demographic information
+          // create a demographics object to add to panel body
+        var dem = [
+            `id: ${filteredMetadata[0].id}`,
+            `ethnicity: ${filteredMetadata[0].ethnicity}`,
+            `gender: ${filteredMetadata[0].gender}`,
+            `age: ${filteredMetadata[0].age}`,
+            `location: ${filteredMetadata[0].location}`,
+            `bbtype: ${filteredMetadata[0].bbtype}`,
+            `wfreq: ${filteredMetadata[0].wfreq}`
+        ]
+        //select the id to append the key value pair under demographics panel
+        panelBody = d3.select("#sample-metadata")
+
+        // remove the current demographic info to make way for new currentID
+        panelBody.html("")
+        
+        //append the key value pairs from demographics into the demographics panel
+        panelBody.append("body").html(dem.join("<br>"))
     });
 };
 inizialization();
