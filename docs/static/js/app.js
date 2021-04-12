@@ -1,7 +1,11 @@
+url = window.location.href
+console.log(url)
+dataurl = url + '/samples.json'
 //function to show something on the page
 function inizialization(){
     PlotData();
 };
+
 
 // I am not sure this function will actually update anything since the node select the first value. I need to understand better the assignment
 function optionChanged(){
@@ -12,7 +16,7 @@ function optionChanged(){
 function PlotData(){
 // Use d3.json() to fetch data from JSON file
 // Incoming data is internally referred to as fullData
-    d3.json("../../samples.json").then((fullData) => {
+    d3.json(dataurl).then((fullData) => {
         console.log(fullData);
         //saving the IDs for the dropdown menu
         ids = fullData.names;
