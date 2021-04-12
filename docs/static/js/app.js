@@ -1,4 +1,5 @@
 //function to show something on the page
+var selectedID = 0
 function inizialization(){
     PlotData();
 };
@@ -15,14 +16,20 @@ function PlotData(){
         //saving the IDs for the dropdown menu
         ids = fullData.names;
         console.log(ids);
-        // creating the dropdown menu
-        // Creating a drop down menu containing the ids
-        ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
-        var selectedID = d3.selectAll("#selDataset").node().value;
-        console.log(selectedID)
         // getting only the dataset exclusing information not relevant
         var sampleData = fullData.samples
         console.log(sampleData)
+        // creating the dropdown menu
+        // Creating a drop down menu containing the ids
+        ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
+        // getting the selectedID
+        if (selectedID === 0){
+            selectedID = d3.selectAll("#selDataset").node().value;
+        }else{
+        selectedID = d3.select("#selDataset").property("optionChanged");
+    }
+        console.log(selectedID)
+        d3.select("selected").remove();
         
         //filter the data for the current ID to get relavant information
         var filteredID = sampleData.filter(row => row.id == selectedID);
@@ -50,9 +57,30 @@ function PlotData(){
             }
 
         };
-
         // plotting the bar plot
         Plotly.newPlot("bar", dataPlot, layout);
+        // working on the bubble chart
+        var trace2 = {
+            x: filteredID[0].otu_ids,
+            y: filteredID[0].sample_values,
+            text: filteredID[0].otu_labels,
+            mode: 'markers',
+            marker: {
+              color: filteredID[0].otu_ids,
+              size: filteredID[0].sample_values
+            }
+          };
+          
+          var data = [trace2];
+          
+          var layout = {
+            title: `Results for test subject ID ${selectedID}`,
+            showlegend: false,
+            height: 600,
+            width: 1200
+          };
+          
+          Plotly.newPlot('bubble', data, layout);
     });
 };
 inizialization();
