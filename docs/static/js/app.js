@@ -1,24 +1,31 @@
-function UpdatedID(){
+//creating a variable containing all the data from samples.json
+d3.json("../../samples.json").then((fullData) => {
+    console.log(fullData);
+    //saving the IDs for the dropdown menu
+    ids = fullData.names;
+    console.log(ids);
+    // creating the dropdown menu
+    // Creating a drop down menu containing the ids
+    ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
+});
+
+function UpdateID(){
     d3.event.preventDefault();
-    PlotData();
+    // storing the selected ID in a variable 
+    var selectedID = d3.select("#selDataset").node().value;
+    console.log(selectedID)
+
+    PlotData(selectedID)
 };
 
-function PlotData(){
+function PlotData(selectedID){
 // Use d3.json() to fetch data from JSON file
 // Incoming data is internally referred to as fullData
     d3.json("../../samples.json").then((fullData) => {
-        // controlling the data
-        console.log(fullData)
-        //list of all the ids
-        var ids = fullData.names;
         // getting only the dataset exclusing information not relevant
         var sampleData = fullData.samples
         console.log(sampleData)
-        // Creating a drop down menu containing the ids
-        ids.forEach(id => d3.select('#selDataset').append('option').text(id).property("value", id));
-        // storing the selected ID in a variable 
-        var selectedID = d3.selectAll("#selDataset").node().value;
-        console.log(selectedID)
+        
         //filter the data for the current ID to get relavant information
         var filteredID = sampleData.filter(row => row.id == selectedID);
         console.log(filteredID)
@@ -50,5 +57,3 @@ function PlotData(){
         Plotly.newPlot("bar", dataPlot, layout);
     });
 };
-// run plot data to show somthing when the page loads.
-PlotData();
