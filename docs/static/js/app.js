@@ -1,6 +1,6 @@
 url = window.location.href
 console.log(url)
-dataurl = url + '/samples.json'
+dataurl = url + 'data/samples.json'
 //function to show something on the page
 function inizialization(){
     PlotData();
